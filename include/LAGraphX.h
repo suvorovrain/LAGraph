@@ -143,6 +143,32 @@ typedef struct
 }
 LAGraph_Contents ;
 
+typedef enum RpqMatrixOp
+{
+    RPQ_MATRIX_OP_LABEL,
+    RPQ_MATRIX_OP_LOR,
+    RPQ_MATRIX_OP_CONCAT,
+    RPQ_MATRIX_OP_KLEENE,
+    RPQ_MATRIX_OP_KLEENE_L,
+    RPQ_MATRIX_OP_KLEENE_R,
+} RpqMatrixOp;
+
+typedef struct RpqMatrixPlan
+{
+    RpqMatrixOp op;
+    struct RpqMatrixPlan *lhs;
+    struct RpqMatrixPlan *rhs;
+    GrB_Matrix mat;
+    GrB_Matrix res_mat;
+} RpqMatrixPlan;
+
+LAGRAPHX_PUBLIC
+GrB_Info LAGraph_RPQMatrix(
+    RpqMatrixPlan *plan,
+     char *msg
+    );
+LAGRAPHX_PUBLIC
+GrB_Info LAGraph_RpqMatrix_initialize();
 LAGRAPHX_PUBLIC
 int LAGraph_SWrite_HeaderStart  // write the first part of the JSON header
 (
